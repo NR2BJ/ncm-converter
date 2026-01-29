@@ -1,18 +1,3 @@
-#!/usr/bin/env python3
-"""
-NCM Converter - Decrypt NetEase Cloud Music NCM files
-
-Usage:
-    Place this script in the same folder as your NCM files and run it.
-    Converted files will be saved in the same folder.
-
-Requirements:
-    pip install pycryptodome mutagen requests pillow
-
-Tested on:
-    Python 3.13, 3.14
-"""
-
 import struct
 import base64
 import json
@@ -27,7 +12,7 @@ try:
     from Crypto.Cipher import AES
     from mutagen.flac import FLAC, Picture
     from mutagen.mp3 import MP3
-    from mutagen.id3 import APIC, ID3
+    from mutagen.id3 import APIC, ID3, TIT2, TPE1, TALB
     import requests
     from PIL import Image
 except ImportError:
@@ -155,9 +140,25 @@ def decrypt_ncm(file_path):
                 img = Image.open(BytesIO(cover_data))
                 mime = f"image/{img.format.lower()}" if img.format else "image/jpeg"
                 
+                # Get metadata for tags
+                title = meta_data.get('musicName', 'Unknown')
+                artist_data = meta_data.get('artist', [])
+                if artist_data and isinstance(artist_data[0], list):
+                    artist = artist_data[0][0] if artist_data[0] else 'Unknown'
+                elif artist_data and isinstance(artist_data[0], str):
+                    artist = artist_data[0]
+                else:
+                    artist = 'Unknown'
+                album = meta_data.get('album', 'Unknown')
+                
                 if audio_format == 'flac':
                     audio = FLAC(str(output_path))
                     audio.clear_pictures()
+                    # Add text tags
+                    audio['TITLE'] = title
+                    audio['ARTIST'] = artist
+                    audio['ALBUM'] = album
+                    # Add picture
                     pic = Picture()
                     pic.type = 3
                     pic.mime = mime
@@ -168,6 +169,11 @@ def decrypt_ncm(file_path):
                     audio = MP3(str(output_path), ID3=ID3)
                     if audio.tags is None:
                         audio.add_tags()
+                    # Add text tags
+                    audio.tags.add(TIT2(encoding=3, text=title))
+                    audio.tags.add(TPE1(encoding=3, text=artist))
+                    audio.tags.add(TALB(encoding=3, text=album))
+                    # Add picture
                     audio.tags.add(APIC(encoding=3, mime=mime, type=3, data=cover_data))
                     audio.save()
                 

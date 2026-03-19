@@ -1,906 +1,109 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCM Converter - Convert NCM to FLAC or MP3 in Your Browser</title>
-    
-    <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="XpIS63TVdp6UeAWybVl0ebmgVmntOSdgRt5Jyuu2GZU" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a1a2e'/><path d='M65 20v45c0 8-7 15-15 15s-15-7-15-15 7-15 15-15c3 0 6 1 8 2V20h7z' fill='%23ff9f43'/><circle cx='50' cy='65' r='12' fill='%23ff9f43'/></svg>">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Free online NCM converter. Convert NetEase Cloud Music (.ncm) files to FLAC or MP3 in your browser, keep album art and metadata, and preview tracks before download.">
-    <meta name="author" content="nr2bj">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-
-    <!-- Open Graph (Facebook, Discord, etc.) -->
-    <meta property="og:title" content="NCM Converter - Convert NetEase Cloud Music to FLAC/MP3 Online Free">
-    <meta property="og:description" content="Free online NCM file converter. Convert .ncm files to FLAC/MP3 with album art. No upload, runs in your browser. 网易云音乐 NCM 변환기.">
+    <title>NCM Converter - Convert NetEase Cloud Music to FLAC/MP3 Online</title>
+    <meta name="description" content="Free online NCM converter. Convert NetEase Cloud Music (.ncm) files to FLAC or MP3 with album art. 100% browser-based, no upload required.">
+    <meta name="keywords" content="NCM converter, NCM to MP3, NCM to FLAC, NetEase Cloud Music, 网易云音乐, NCM decoder, NCM 변환기">
+    <link rel="canonical" href="https://nr2bj.github.io/ncm-converter/">
+    <meta property="og:title" content="NCM Converter - Convert NetEase Cloud Music to FLAC/MP3">
+    <meta property="og:description" content="Free online NCM file converter with album art. No upload, runs in your browser.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nr2bj.github.io/ncm-converter/">
-    <meta property="og:site_name" content="NCM Converter">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="ko_KR">
-    <meta property="og:locale:alternate" content="zh_CN">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="NCM Converter - Convert NetEase Cloud Music to FLAC/MP3">
-    <meta name="twitter:description" content="Free online NCM converter with album art. No upload needed - 100% browser-based.">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://nr2bj.github.io/ncm-converter/">
-
-    <!-- Structured Data (JSON-LD) - WebApplication -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "NCM Converter",
-        "url": "https://nr2bj.github.io/ncm-converter/",
-        "description": "Free online tool to convert NetEase Cloud Music (.ncm) files to FLAC/MP3 with high-quality album art. All processing happens in your browser - no file upload required.",
+        "url": "https://ncm.nr2bj.com/",
+        "description": "Free online tool to convert NetEase Cloud Music (.ncm) files to FLAC or MP3 with high-quality album art. All processing happens in your browser.",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any",
-        "browserRequirements": "Requires a modern web browser with JavaScript enabled",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "featureList": [
-            "Convert NCM to FLAC",
-            "Convert NCM to MP3",
-            "High-quality album art embedding",
-            "Batch file conversion",
-            "Browser-based processing",
-            "No file upload required",
-            "Built-in music player",
-            "ZIP download for multiple files"
-        ],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "datePublished": "2026-02-10T00:00:00+09:00",
         "dateModified": "2026-03-17T00:00:00+09:00",
-        "author": {
-            "@type": "Person",
-            "name": "nr2bj",
-            "url": "https://github.com/NR2BJ"
-        }
+        "author": { "@type": "Person", "name": "nr2bj", "url": "https://github.com/NR2BJ" }
     }
     </script>
-
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1a1a2e; color: #eee; min-height: 100vh; padding: 20px; padding-top: 100px;
-        }
-        .container { max-width: 900px; margin: 0 auto; }
-        .site-nav {
-            display: flex; justify-content: flex-end; gap: 14px; margin-bottom: 18px;
-            font-size: 14px; flex-wrap: wrap;
-        }
-        .site-nav a { color: #9fb3d9; text-decoration: none; }
-        .site-nav a:hover { color: #ff9f43; }
-        .player-bar {
-            position: fixed; top: 0; left: 0; right: 0; background: #0f0f1a;
-            border-bottom: 1px solid #333; padding: 12px 20px; z-index: 1000;
-            display: flex; align-items: center; gap: 15px;
-        }
-        .player-cover { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; background: #333; }
-        .player-info { flex: 0 0 150px; min-width: 0; }
-        .player-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .player-artist { font-size: 12px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .player-controls { display: flex; align-items: center; gap: 10px; }
-        .player-btn {
-            width: 36px; height: 36px; border: none; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            background: #ff9f43; color: #1a1a2e; transition: all 0.2s;
-        }
-        .player-btn:hover { background: #ffa94d; }
-        .player-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-        .player-progress-container { flex: 1; display: flex; align-items: center; gap: 10px; }
-        .player-time { font-size: 12px; color: #888; min-width: 45px; text-align: center; }
-        .player-progress { flex: 1; height: 6px; background: #333; border-radius: 3px; cursor: pointer; }
-        .player-progress-fill { height: 100%; background: #ff9f43; border-radius: 3px; width: 0%; transition: width 0.1s; }
-        .player-volume { display: flex; align-items: center; gap: 8px; }
-        .player-volume svg { color: #888; }
-        .volume-slider { width: 80px; height: 6px; -webkit-appearance: none; background: #333; border-radius: 3px; cursor: pointer; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ff9f43; border-radius: 50%; cursor: pointer; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        h1 { color: #fff; }
-        .subtitle { color: #888; margin-bottom: 20px; font-size: 14px; }
-        .drop-zone {
-            border: 2px dashed #444; border-radius: 12px; padding: 60px 20px; text-align: center;
-            cursor: pointer; transition: all 0.3s; background: #16213e; margin-bottom: 20px;
-        }
-        .drop-zone:hover, .drop-zone.drag-over { border-color: #ff9f43; background: #1a2744; }
-        .drop-zone-text { color: #888; font-size: 16px; }
-        .drop-zone-text strong { color: #ff9f43; }
-        #file-input { display: none; }
-        .actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn {
-            padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
-            transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-        }
-        .btn-primary { background: #ff9f43; color: #1a1a2e; }
-        .btn-primary:hover { background: #ffa94d; }
-        .btn-secondary { background: #333; color: #eee; }
-        .btn-secondary:hover { background: #444; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .file-list { display: flex; flex-direction: column; gap: 10px; }
-        .file-item {
-            display: flex; align-items: center; gap: 15px; background: #16213e;
-            border-radius: 10px; padding: 12px; transition: all 0.2s;
-        }
-        .file-item:hover { background: #1a2744; }
-        .file-item.playing { background: #1a2744; border: 1px solid #ff9f43; }
-        .file-cover { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; background: #333; }
-        .file-info { flex: 1; min-width: 0; }
-        .file-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .file-artist { color: #888; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .file-album { color: #666; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .file-format { background: #ff9f43; color: #1a1a2e; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-        .file-actions { display: flex; gap: 8px; }
-        .file-btn {
-            width: 36px; height: 36px; border: none; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: #333; color: #eee;
-        }
-        .file-btn:hover { background: #444; }
-        .file-btn.playing { background: #ff9f43; color: #1a1a2e; }
-        .file-item.loading { opacity: 0.6; }
-        .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: #ff9f43; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .status { padding: 10px 15px; border-radius: 6px; margin-bottom: 15px; display: none; }
-        .status.error { background: #4a1a1a; color: #ff6b6b; display: block; }
-        .status.success { background: #3d2a1a; color: #ff9f43; display: block; }
-        .empty-state { text-align: center; padding: 40px; color: #666; }
-        .trust-strip {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
-            margin: 0 0 28px;
-        }
-        .trust-card {
-            background: #11192f; border: 1px solid #2a3558; border-radius: 10px; padding: 14px 16px;
-        }
-        .trust-card strong { display: block; color: #fff; margin-bottom: 6px; font-size: 14px; }
-        .trust-card span { color: #99a4c2; font-size: 13px; line-height: 1.5; }
-        .seo-content { margin-top: 60px; padding-top: 40px; border-top: 1px solid #333; }
-        .seo-content h2 { color: #fff; margin-bottom: 12px; font-size: 24px; }
-        .seo-content p { color: #a5afc8; line-height: 1.7; font-size: 14px; margin-bottom: 14px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .feature-card { background: #1a2744; border-radius: 8px; padding: 16px; }
-        .feature-card h3 { color: #ddd; font-size: 15px; margin-bottom: 8px; }
-        .feature-card p { margin-bottom: 0; }
-        .resource-links {
-            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
-        }
-        .resource-links a {
-            color: #ff9f43; text-decoration: none; border: 1px solid #3f475f; border-radius: 999px;
-            padding: 10px 14px; font-size: 13px; background: #11192f;
-        }
-        .resource-links a:hover { border-color: #ff9f43; }
-        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; text-align: center; color: #666; font-size: 13px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .container { max-width: 640px; text-align: center; }
+        h1 { font-size: 2.5rem; margin-bottom: 12px; }
+        .subtitle { color: #aaa; font-size: 1.1rem; line-height: 1.6; margin-bottom: 32px; }
+        .cta { display: inline-block; background: #ff9f43; color: #1a1a2e; font-size: 1.2rem; font-weight: 700; padding: 16px 40px; border-radius: 10px; text-decoration: none; transition: background 0.2s; }
+        .cta:hover { background: #ffa94d; }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 40px 0; text-align: left; }
+        .feature { background: #16213e; border-radius: 10px; padding: 18px; }
+        .feature strong { display: block; color: #fff; margin-bottom: 6px; }
+        .feature span { color: #99a4c2; font-size: 14px; line-height: 1.5; }
+        .section { margin-top: 48px; text-align: left; }
+        .section h2 { font-size: 1.3rem; margin-bottom: 14px; color: #fff; }
+        .section p { color: #99a4c2; line-height: 1.7; margin-bottom: 12px; font-size: 15px; }
+        .links { margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .links a { color: #ff9f43; text-decoration: none; font-size: 14px; }
+        .links a:hover { text-decoration: underline; }
+        footer { margin-top: 48px; color: #555; font-size: 13px; }
         footer a { color: #ff9f43; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-        @media (max-width: 768px) {
-            .player-bar { flex-wrap: wrap; gap: 10px; }
-            .player-info { flex: 1; }
-            .player-progress-container { flex: 100%; order: 10; }
-            .player-volume { display: none; }
-        }
+        @media (max-width: 500px) { .features { grid-template-columns: 1fr; } h1 { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
-    <div class="player-bar">
-        <img class="player-cover" id="player-cover" src="" alt="" style="display:none">
-        <div class="player-cover" id="player-cover-placeholder"></div>
-        <div class="player-info">
-            <div class="player-title" id="player-title">No track selected</div>
-            <div class="player-artist" id="player-artist">-</div>
-        </div>
-        <div class="player-controls">
-            <button class="player-btn" id="player-play-btn" disabled>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-        </div>
-        <div class="player-progress-container">
-            <span class="player-time" id="player-current">0:00</span>
-            <div class="player-progress" id="player-progress">
-                <div class="player-progress-fill" id="player-progress-fill"></div>
-            </div>
-            <span class="player-time" id="player-duration">0:00</span>
-        </div>
-        <div class="player-volume">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1">
-        </div>
-    </div>
-    
     <main class="container">
-        <nav class="site-nav" aria-label="Site navigation">
-            <a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">How to convert</a>
+        <h1>NCM Converter</h1>
+        <p class="subtitle">Convert NetEase Cloud Music (.ncm) files to FLAC or MP3 with album art.<br>100% browser-based &mdash; your files are never uploaded.</p>
+        <a class="cta" href="https://ncm.nr2bj.com/">Open Converter &rarr;</a>
+
+        <div class="features">
+            <div class="feature">
+                <strong>Lossless Output</strong>
+                <span>FLAC stays lossless, MP3 streams are preserved without re-encoding.</span>
+            </div>
+            <div class="feature">
+                <strong>Album Art &amp; Tags</strong>
+                <span>Embeds cover art, title, artist, and album metadata automatically.</span>
+            </div>
+            <div class="feature">
+                <strong>Batch Convert</strong>
+                <span>Drop multiple NCM files at once and download them all as a ZIP.</span>
+            </div>
+            <div class="feature">
+                <strong>Built-in Player</strong>
+                <span>Preview converted tracks in the browser before downloading.</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What is an NCM file?</h2>
+            <p>NCM is a proprietary encrypted audio format used by <strong>NetEase Cloud Music</strong> (网易云音乐 / 넷이즈 클라우드 뮤직), one of the largest music streaming platforms in China. Files downloaded for offline listening are saved as .ncm and cannot be played by standard audio players.</p>
+            <p>NCM Converter decrypts the container, extracts the original audio stream (FLAC or MP3), fetches album artwork, and outputs a standard audio file &mdash; all within your browser. No server upload, no installation required.</p>
+        </div>
+
+        <div class="section">
+            <h2>How to convert NCM files</h2>
+            <p>1. Open <a href="https://ncm.nr2bj.com/" style="color:#ff9f43">ncm.nr2bj.com</a><br>
+               2. Drag and drop your .ncm files (or click to select)<br>
+               3. Wait for conversion to complete<br>
+               4. Download individual files or all at once as ZIP</p>
+        </div>
+
+        <div class="section">
+            <h2>Python CLI version</h2>
+            <p>Prefer command-line? The Python script supports batch conversion with multithreading. Install dependencies with <code style="background:#16213e;padding:2px 6px;border-radius:4px">pip install pycryptodome mutagen requests pillow</code> and run <code style="background:#16213e;padding:2px 6px;border-radius:4px">python ncm_converter.py</code> in the folder with your NCM files.</p>
+        </div>
+
+        <div class="links">
+            <a href="https://ncm.nr2bj.com/">Web App</a>
             <a href="https://ncm.nr2bj.com/faq.html">FAQ</a>
-            <a href="https://ncm.nr2bj.com/privacy.html">Privacy</a>
-            <a href="https://ncm.nr2bj.com/about.html">About</a>
-        </nav>
-        <header class="header"><h1>NCM Converter</h1></header>
-        <p class="subtitle">Convert NetEase Cloud Music (.ncm) files to FLAC/MP3 with album art, metadata, and instant playback &mdash; 100% browser-based, no upload required</p>
-
-        <section aria-label="File upload">
-            <div class="drop-zone" id="drop-zone">
-                <p class="drop-zone-text"><strong>Drop NCM files here</strong><br>or click to select</p>
-                <input type="file" id="file-input" multiple accept=".ncm">
-            </div>
-            <div class="status" id="status"></div>
-            <div class="actions">
-                <button class="btn btn-primary" id="download-all-btn" disabled>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                    Download All (ZIP)
-                </button>
-                <button class="btn btn-secondary" id="clear-btn" disabled>Clear All</button>
-            </div>
-        </section>
-
-        <section aria-label="Converted files">
-            <div class="file-list" id="file-list">
-                <div class="empty-state">No files converted yet</div>
-            </div>
-        </section>
-
-        <section class="trust-strip" aria-label="Key features">
-            <div class="trust-card">
-                <strong>Runs locally</strong>
-                <span>Your files stay in the browser. Nothing is uploaded to this site during conversion.</span>
-            </div>
-            <div class="trust-card">
-                <strong>Preserves metadata</strong>
-                <span>Title, artist, album, and cover art are written back into the exported file when available.</span>
-            </div>
-            <div class="trust-card">
-                <strong>Preview before download</strong>
-                <span>Play converted tracks in the page first, then download one by one or as a ZIP archive.</span>
-            </div>
-        </section>
-
-        <section class="seo-content">
-            <h2>Browser-based NCM conversion for personal playback</h2>
-            <p>NCM Converter is a free web app for people who already have lawful access to NetEase Cloud Music downloads and want them in standard audio formats. It reads the NCM container locally in the browser, restores the original audio stream, and prepares a downloadable FLAC or MP3 file with album data when that information is available.</p>
-            <p>The homepage stays focused on the tool itself. If you want the supporting details, there are separate pages for step-by-step instructions, privacy notes, common questions, and project background so both visitors and search engines can understand what the site offers without burying the converter under filler copy.</p>
-            <div class="features-grid">
-                <article class="feature-card">
-                    <h3>FLAC and MP3 export</h3>
-                    <p>The app detects the original stream and keeps lossless FLAC output untouched when the source track is lossless.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Album art and tags</h3>
-                    <p>Converted files can include title, artist, album, and cover image metadata instead of a bare audio file.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Built-in playback</h3>
-                    <p>Preview converted tracks in the player bar before downloading individual files or a ZIP bundle.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Simple static deployment</h3>
-                    <p>The site is just static HTML and JavaScript, so it can be hosted easily behind Caddy or any static file server.</p>
-                </article>
-            </div>
-            <div class="resource-links">
-                <a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">Read the conversion guide</a>
-                <a href="https://ncm.nr2bj.com/faq.html">Open the FAQ</a>
-                <a href="https://ncm.nr2bj.com/privacy.html">Review privacy details</a>
-                <a href="https://ncm.nr2bj.com/about.html">Learn about the project</a>
-            </div>
-        </section>
+            <a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">Guide</a>
+            <a href="https://github.com/NR2BJ/ncm-converter">GitHub</a>
+        </div>
 
         <footer>
-            <p>NCM Converter &mdash; Free online NCM to FLAC/MP3 converter. <a href="https://github.com/NR2BJ/ncm-converter" target="_blank" rel="noopener">View on GitHub</a></p>
-            <p><a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">How to convert</a> · <a href="https://ncm.nr2bj.com/faq.html">FAQ</a> · <a href="https://ncm.nr2bj.com/privacy.html">Privacy</a> · <a href="https://ncm.nr2bj.com/about.html">About</a></p>
+            <p>NCM Converter &mdash; Free online NCM to FLAC/MP3 converter</p>
             <p>NCM 변환기 | 网易云音乐 NCM 文件转换器</p>
         </footer>
     </main>
-    
-    <audio id="audio-player"></audio>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    
-    <script>
-        const CORE_KEY = new Uint8Array([0x68,0x7A,0x48,0x52,0x41,0x6D,0x73,0x6F,0x35,0x6B,0x49,0x6E,0x62,0x61,0x78,0x57]);
-        const META_KEY = new Uint8Array([0x23,0x31,0x34,0x6C,0x6A,0x6B,0x5F,0x21,0x5C,0x5D,0x26,0x30,0x55,0x3C,0x27,0x28]);
-        
-        // AES ECB Decrypt
-        class AES {
-            constructor(key) {
-                this.key = key;
-                this.sbox = new Uint8Array([0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,0x04,0xc7,0x23,0xc3,0x18,0x96,0x05,0x9a,0x07,0x12,0x80,0xe2,0xeb,0x27,0xb2,0x75,0x09,0x83,0x2c,0x1a,0x1b,0x6e,0x5a,0xa0,0x52,0x3b,0xd6,0xb3,0x29,0xe3,0x2f,0x84,0x53,0xd1,0x00,0xed,0x20,0xfc,0xb1,0x5b,0x6a,0xcb,0xbe,0x39,0x4a,0x4c,0x58,0xcf,0xd0,0xef,0xaa,0xfb,0x43,0x4d,0x33,0x85,0x45,0xf9,0x02,0x7f,0x50,0x3c,0x9f,0xa8,0x51,0xa3,0x40,0x8f,0x92,0x9d,0x38,0xf5,0xbc,0xb6,0xda,0x21,0x10,0xff,0xf3,0xd2,0xcd,0x0c,0x13,0xec,0x5f,0x97,0x44,0x17,0xc4,0xa7,0x7e,0x3d,0x64,0x5d,0x19,0x73,0x60,0x81,0x4f,0xdc,0x22,0x2a,0x90,0x88,0x46,0xee,0xb8,0x14,0xde,0x5e,0x0b,0xdb,0xe0,0x32,0x3a,0x0a,0x49,0x06,0x24,0x5c,0xc2,0xd3,0xac,0x62,0x91,0x95,0xe4,0x79,0xe7,0xc8,0x37,0x6d,0x8d,0xd5,0x4e,0xa9,0x6c,0x56,0xf4,0xea,0x65,0x7a,0xae,0x08,0xba,0x78,0x25,0x2e,0x1c,0xa6,0xb4,0xc6,0xe8,0xdd,0x74,0x1f,0x4b,0xbd,0x8b,0x8a,0x70,0x3e,0xb5,0x66,0x48,0x03,0xf6,0x0e,0x61,0x35,0x57,0xb9,0x86,0xc1,0x1d,0x9e,0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16]);
-                this.rsbox = new Uint8Array(256);
-                for (let i = 0; i < 256; i++) this.rsbox[this.sbox[i]] = i;
-                this.rcon = new Uint8Array([0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x1b,0x36]);
-                this.expandKey();
-            }
-            expandKey() {
-                this.roundKeys = new Uint8Array(176);
-                this.roundKeys.set(this.key);
-                for (let i = 16; i < 176; i += 4) {
-                    let t = this.roundKeys.slice(i - 4, i);
-                    if (i % 16 === 0) t = new Uint8Array([this.sbox[t[1]] ^ this.rcon[i/16-1], this.sbox[t[2]], this.sbox[t[3]], this.sbox[t[0]]]);
-                    for (let j = 0; j < 4; j++) this.roundKeys[i + j] = this.roundKeys[i - 16 + j] ^ t[j];
-                }
-            }
-            decryptBlock(block) {
-                let state = new Uint8Array(block);
-                this.addRoundKey(state, 10);
-                for (let round = 9; round > 0; round--) { this.invShiftRows(state); this.invSubBytes(state); this.addRoundKey(state, round); this.invMixColumns(state); }
-                this.invShiftRows(state); this.invSubBytes(state); this.addRoundKey(state, 0);
-                return state;
-            }
-            addRoundKey(state, round) { for (let i = 0; i < 16; i++) state[i] ^= this.roundKeys[round * 16 + i]; }
-            invSubBytes(state) { for (let i = 0; i < 16; i++) state[i] = this.rsbox[state[i]]; }
-            invShiftRows(state) {
-                let t = state[13]; state[13] = state[9]; state[9] = state[5]; state[5] = state[1]; state[1] = t;
-                t = state[2]; state[2] = state[10]; state[10] = t; t = state[6]; state[6] = state[14]; state[14] = t;
-                t = state[3]; state[3] = state[7]; state[7] = state[11]; state[11] = state[15]; state[15] = t;
-            }
-            invMixColumns(state) {
-                for (let c = 0; c < 4; c++) {
-                    const i = c * 4, a = state.slice(i, i + 4);
-                    state[i] = this.mul(0x0e,a[0])^this.mul(0x0b,a[1])^this.mul(0x0d,a[2])^this.mul(0x09,a[3]);
-                    state[i+1] = this.mul(0x09,a[0])^this.mul(0x0e,a[1])^this.mul(0x0b,a[2])^this.mul(0x0d,a[3]);
-                    state[i+2] = this.mul(0x0d,a[0])^this.mul(0x09,a[1])^this.mul(0x0e,a[2])^this.mul(0x0b,a[3]);
-                    state[i+3] = this.mul(0x0b,a[0])^this.mul(0x0d,a[1])^this.mul(0x09,a[2])^this.mul(0x0e,a[3]);
-                }
-            }
-            mul(a, b) { let p = 0; for (let i = 0; i < 8; i++) { if (b & 1) p ^= a; const hi = a & 0x80; a = (a << 1) & 0xff; if (hi) a ^= 0x1b; b >>= 1; } return p; }
-            decrypt(data) {
-                const result = new Uint8Array(data.length);
-                for (let i = 0; i < data.length; i += 16) result.set(this.decryptBlock(data.slice(i, i + 16)), i);
-                return result;
-            }
-        }
-
-        function unpad(data) { return data.slice(0, data.length - data[data.length - 1]); }
-
-        // FLAC Picture Block
-        function createFlacPicture(imageData, mimeType) {
-            const mime = new TextEncoder().encode(mimeType);
-            const desc = new Uint8Array(0);
-            // Picture block: type(4) + mime_len(4) + mime + desc_len(4) + desc + width(4) + height(4) + depth(4) + colors(4) + data_len(4) + data
-            const block = new Uint8Array(4 + 4 + mime.length + 4 + desc.length + 4 + 4 + 4 + 4 + 4 + imageData.length);
-            let offset = 0;
-            // Picture type: 3 = front cover
-            block[offset++] = 0; block[offset++] = 0; block[offset++] = 0; block[offset++] = 3;
-            // MIME length
-            block[offset++] = (mime.length >> 24) & 0xff; block[offset++] = (mime.length >> 16) & 0xff;
-            block[offset++] = (mime.length >> 8) & 0xff; block[offset++] = mime.length & 0xff;
-            block.set(mime, offset); offset += mime.length;
-            // Description length
-            block[offset++] = 0; block[offset++] = 0; block[offset++] = 0; block[offset++] = 0;
-            // Width, height, depth, colors (0 = unknown)
-            for (let i = 0; i < 16; i++) block[offset++] = 0;
-            // Data length
-            block[offset++] = (imageData.length >> 24) & 0xff; block[offset++] = (imageData.length >> 16) & 0xff;
-            block[offset++] = (imageData.length >> 8) & 0xff; block[offset++] = imageData.length & 0xff;
-            block.set(imageData, offset);
-            return block;
-        }
-        
-        // FLAC Vorbis Comment Block (for text tags)
-        function createVorbisComment(title, artist, album) {
-            const encoder = new TextEncoder();
-            const vendor = encoder.encode('NCM Converter');
-            const comments = [];
-            if (title) comments.push(encoder.encode('TITLE=' + title));
-            if (artist) comments.push(encoder.encode('ARTIST=' + artist));
-            if (album) comments.push(encoder.encode('ALBUM=' + album));
-            
-            // Calculate total size
-            let size = 4 + vendor.length + 4; // vendor_length + vendor + comment_count
-            for (const c of comments) size += 4 + c.length;
-            
-            const block = new Uint8Array(size);
-            let offset = 0;
-            
-            // Vendor length (little-endian)
-            block[offset++] = vendor.length & 0xff;
-            block[offset++] = (vendor.length >> 8) & 0xff;
-            block[offset++] = (vendor.length >> 16) & 0xff;
-            block[offset++] = (vendor.length >> 24) & 0xff;
-            block.set(vendor, offset); offset += vendor.length;
-            
-            // Comment count (little-endian)
-            block[offset++] = comments.length & 0xff;
-            block[offset++] = (comments.length >> 8) & 0xff;
-            block[offset++] = (comments.length >> 16) & 0xff;
-            block[offset++] = (comments.length >> 24) & 0xff;
-            
-            // Comments
-            for (const c of comments) {
-                block[offset++] = c.length & 0xff;
-                block[offset++] = (c.length >> 8) & 0xff;
-                block[offset++] = (c.length >> 16) & 0xff;
-                block[offset++] = (c.length >> 24) & 0xff;
-                block.set(c, offset); offset += c.length;
-            }
-            
-            return block;
-        }
-
-        function embedFlacTags(audioData, imageData, mimeType, title, artist, album) {
-            // Verify FLAC header
-            if (String.fromCharCode(...audioData.slice(0, 4)) !== 'fLaC') return audioData;
-            
-            const picture = imageData ? createFlacPicture(imageData, mimeType) : null;
-            const vorbis = createVorbisComment(title, artist, album);
-            
-            // Find position after all metadata blocks
-            let pos = 4; // After "fLaC"
-            while (pos < audioData.length) {
-                const isLast = (audioData[pos] & 0x80) !== 0;
-                const blockType = audioData[pos] & 0x7f;
-                const blockLen = (audioData[pos + 1] << 16) | (audioData[pos + 2] << 8) | audioData[pos + 3];
-                pos += 4 + blockLen;
-                if (isLast) break;
-            }
-            
-            // Calculate new size
-            let extraSize = 4 + vorbis.length; // Vorbis comment block
-            if (picture) extraSize += 4 + picture.length; // Picture block
-            
-            const result = new Uint8Array(audioData.length + extraSize);
-            let writePos = 0;
-            
-            // Copy header
-            result.set(audioData.slice(0, 4), writePos); writePos += 4;
-            
-            // Copy metadata blocks, clearing last-block flag and skipping existing VORBIS_COMMENT
-            let readPos = 4;
-            while (readPos < pos) {
-                const header = audioData[readPos];
-                const isLast = (header & 0x80) !== 0;
-                const blockType = header & 0x7f;
-                const blockLen = (audioData[readPos + 1] << 16) | (audioData[readPos + 2] << 8) | audioData[readPos + 3];
-                
-                // Skip existing VORBIS_COMMENT (type 4)
-                if (blockType !== 4) {
-                    result[writePos] = header & 0x7f; // Clear last-block flag
-                    result.set(audioData.slice(readPos + 1, readPos + 4 + blockLen), writePos + 1);
-                    writePos += 4 + blockLen;
-                }
-                readPos += 4 + blockLen;
-                if (isLast) break;
-            }
-            
-            // Add Vorbis comment block (type 4)
-            result[writePos] = picture ? 4 : 0x84; // Type 4, last if no picture
-            result[writePos + 1] = (vorbis.length >> 16) & 0xff;
-            result[writePos + 2] = (vorbis.length >> 8) & 0xff;
-            result[writePos + 3] = vorbis.length & 0xff;
-            writePos += 4;
-            result.set(vorbis, writePos); writePos += vorbis.length;
-            
-            // Add picture block if present
-            if (picture) {
-                result[writePos] = 0x86; // Type 6 + last block flag
-                result[writePos + 1] = (picture.length >> 16) & 0xff;
-                result[writePos + 2] = (picture.length >> 8) & 0xff;
-                result[writePos + 3] = picture.length & 0xff;
-                writePos += 4;
-                result.set(picture, writePos); writePos += picture.length;
-            }
-            
-            // Copy audio frames
-            result.set(audioData.slice(pos), writePos);
-            
-            return result.slice(0, writePos + audioData.length - pos);
-        }
-
-        // ID3v2 for MP3
-        function createId3v2Tag(imageData, mimeType, title, artist, album) {
-            const encoder = new TextEncoder();
-            const frames = [];
-            
-            // Helper to create text frame
-            function textFrame(id, text) {
-                const textBytes = encoder.encode(text);
-                const frame = new Uint8Array(10 + 1 + textBytes.length);
-                frame.set(encoder.encode(id), 0);
-                const size = 1 + textBytes.length;
-                frame[4] = (size >> 24) & 0x7f; frame[5] = (size >> 16) & 0x7f;
-                frame[6] = (size >> 8) & 0x7f; frame[7] = size & 0x7f;
-                frame[8] = 0; frame[9] = 0; // Flags
-                frame[10] = 3; // UTF-8 encoding
-                frame.set(textBytes, 11);
-                return frame;
-            }
-            
-            // Add text frames
-            if (title) frames.push(textFrame('TIT2', title));
-            if (artist) frames.push(textFrame('TPE1', artist));
-            if (album) frames.push(textFrame('TALB', album));
-            
-            // APIC frame (album art)
-            if (imageData && imageData.length > 0) {
-                const mimeBytes = encoder.encode(mimeType);
-                const apicSize = 1 + mimeBytes.length + 1 + 1 + 1 + imageData.length;
-                const apic = new Uint8Array(10 + apicSize);
-                apic.set(encoder.encode('APIC'), 0);
-                apic[4] = (apicSize >> 24) & 0x7f; apic[5] = (apicSize >> 16) & 0x7f;
-                apic[6] = (apicSize >> 8) & 0x7f; apic[7] = apicSize & 0x7f;
-                apic[8] = 0; apic[9] = 0;
-                let pos = 10;
-                apic[pos++] = 0; // Encoding: ISO-8859-1
-                apic.set(mimeBytes, pos); pos += mimeBytes.length;
-                apic[pos++] = 0; // Null terminator
-                apic[pos++] = 3; // Picture type: front cover
-                apic[pos++] = 0; // Description (empty)
-                apic.set(imageData, pos);
-                frames.push(apic);
-            }
-            
-            // Calculate total size
-            let totalSize = 0;
-            for (const frame of frames) totalSize += frame.length;
-            
-            // Create ID3v2 header
-            const header = new Uint8Array(10);
-            header.set(encoder.encode('ID3'), 0);
-            header[3] = 4; header[4] = 0; // Version 2.4.0
-            header[5] = 0; // Flags
-            // Syncsafe integer
-            header[6] = (totalSize >> 21) & 0x7f;
-            header[7] = (totalSize >> 14) & 0x7f;
-            header[8] = (totalSize >> 7) & 0x7f;
-            header[9] = totalSize & 0x7f;
-            
-            // Combine
-            const tag = new Uint8Array(10 + totalSize);
-            tag.set(header, 0);
-            let offset = 10;
-            for (const frame of frames) { tag.set(frame, offset); offset += frame.length; }
-            
-            return tag;
-        }
-
-        function embedMp3Tags(audioData, imageData, mimeType, title, artist, album) {
-            const tag = createId3v2Tag(imageData, mimeType, title, artist, album);
-            
-            // Check if already has ID3v2
-            let audioStart = 0;
-            if (String.fromCharCode(...audioData.slice(0, 3)) === 'ID3') {
-                // Skip existing ID3v2 tag
-                const size = ((audioData[6] & 0x7f) << 21) | ((audioData[7] & 0x7f) << 14) |
-                             ((audioData[8] & 0x7f) << 7) | (audioData[9] & 0x7f);
-                audioStart = 10 + size;
-            }
-            
-            const result = new Uint8Array(tag.length + audioData.length - audioStart);
-            result.set(tag, 0);
-            result.set(audioData.slice(audioStart), tag.length);
-            return result;
-        }
-
-        async function decryptNCM(arrayBuffer) {
-            const data = new Uint8Array(arrayBuffer);
-            let offset = 0;
-            
-            if (String.fromCharCode(...data.slice(0, 8)) !== 'CTENFDAM') throw new Error('Invalid NCM file');
-            offset = 10;
-            
-            const keyLen = data[offset] | (data[offset+1] << 8) | (data[offset+2] << 16) | (data[offset+3] << 24);
-            offset += 4;
-            const keyData = new Uint8Array(data.slice(offset, offset + keyLen));
-            offset += keyLen;
-            for (let i = 0; i < keyData.length; i++) keyData[i] ^= 0x64;
-            
-            const aes1 = new AES(CORE_KEY);
-            const decryptedKey = unpad(aes1.decrypt(keyData)).slice(17);
-            
-            const box = new Uint8Array(256);
-            for (let i = 0; i < 256; i++) box[i] = i;
-            let j = 0;
-            for (let i = 0; i < 256; i++) { j = (j + box[i] + decryptedKey[i % decryptedKey.length]) & 0xff; [box[i], box[j]] = [box[j], box[i]]; }
-            
-            const keyStream = new Uint8Array(256);
-            for (let i = 0; i < 256; i++) {
-                const key1 = (i + 1) & 0xff, key2 = (key1 + box[key1]) & 0xff;
-                keyStream[i] = box[(box[key1] + box[key2]) & 0xff];
-            }
-            
-            const metaLen = data[offset] | (data[offset+1] << 8) | (data[offset+2] << 16) | (data[offset+3] << 24);
-            offset += 4;
-            
-            let metadata = { format: 'mp3', musicName: 'Unknown', artist: [], album: 'Unknown', musicId: 0 };
-            if (metaLen > 0) {
-                const metaData = new Uint8Array(data.slice(offset, offset + metaLen));
-                offset += metaLen;
-                for (let i = 0; i < metaData.length; i++) metaData[i] ^= 0x63;
-                const metaStr = new TextDecoder().decode(metaData).slice(22);
-                const decoded = atob(metaStr);
-                const decodedBytes = new Uint8Array(decoded.length);
-                for (let i = 0; i < decoded.length; i++) decodedBytes[i] = decoded.charCodeAt(i);
-                const aes2 = new AES(META_KEY);
-                const decryptedMeta = unpad(aes2.decrypt(decodedBytes));
-                metadata = JSON.parse(new TextDecoder().decode(decryptedMeta).slice(6));
-            }
-            
-            offset += 5; // Skip CRC
-            
-            const imageSpace = data[offset] | (data[offset+1] << 8) | (data[offset+2] << 16) | (data[offset+3] << 24);
-            offset += 4;
-            const imageLen = data[offset] | (data[offset+1] << 8) | (data[offset+2] << 16) | (data[offset+3] << 24);
-            offset += 4;
-            const imageData = imageLen > 0 ? data.slice(offset, offset + imageLen) : null;
-            offset += imageSpace;
-            
-            const audioData = new Uint8Array(data.slice(offset));
-            for (let i = 0; i < audioData.length; i++) audioData[i] ^= keyStream[i & 0xff];
-            
-            let artist = 'Unknown';
-            if (metadata.artist && metadata.artist.length > 0) {
-                artist = Array.isArray(metadata.artist[0]) ? metadata.artist.map(a => a[0]).join(', ') : metadata.artist.join(', ');
-            }
-            
-            return {
-                audio: audioData,
-                format: metadata.format || 'mp3',
-                title: metadata.musicName || 'Unknown',
-                artist, album: metadata.album || 'Unknown',
-                musicId: metadata.musicId,
-                embeddedImage: imageData
-            };
-        }
-
-        async function fetchAlbumArt(musicId) {
-            if (!musicId) return null;
-            
-            try {
-                // Use local Caddy proxy - no CORS issues
-                const response = await fetch(`https://ncm.nr2bj.com/proxy/api/song/detail/?ids=[${musicId}]`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.songs && data.songs[0]) {
-                        return data.songs[0].album.picUrl;
-                    }
-                }
-            } catch (e) { 
-                console.log('Album art API failed:', e);
-            }
-            return null;
-        }
-
-        async function fetchImageAsBytes(url) {
-            if (!url) return null;
-            
-            try {
-                // Use local Caddy proxy for image
-                // music.126.net images -> /img/ proxy
-                const urlObj = new URL(url);
-                let proxyUrl;
-                if (urlObj.hostname.includes('126.net')) {
-                    proxyUrl = `https://ncm.nr2bj.com/img${urlObj.pathname}`;
-                } else {
-                    proxyUrl = `https://ncm.nr2bj.com/proxy${urlObj.pathname}`;
-                }
-                
-                const response = await fetch(proxyUrl);
-                if (response.ok) {
-                    const blob = await response.blob();
-                    if (blob.size > 1000) {
-                        return new Uint8Array(await blob.arrayBuffer());
-                    }
-                }
-            } catch (e) { 
-                console.log('Image fetch failed:', e);
-            }
-            return null;
-        }
-
-        // UI
-        let files = {};
-        let currentFileId = null;
-        
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const fileList = document.getElementById('file-list');
-        const downloadAllBtn = document.getElementById('download-all-btn');
-        const clearBtn = document.getElementById('clear-btn');
-        const statusEl = document.getElementById('status');
-        const audioPlayer = document.getElementById('audio-player');
-        const playerCover = document.getElementById('player-cover');
-        const playerCoverPlaceholder = document.getElementById('player-cover-placeholder');
-        const playerTitle = document.getElementById('player-title');
-        const playerArtist = document.getElementById('player-artist');
-        const playerPlayBtn = document.getElementById('player-play-btn');
-        const playerProgress = document.getElementById('player-progress');
-        const playerProgressFill = document.getElementById('player-progress-fill');
-        const playerCurrent = document.getElementById('player-current');
-        const playerDuration = document.getElementById('player-duration');
-        const volumeSlider = document.getElementById('volume-slider');
-        
-        dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
-        fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); fileInput.value = ''; });
-        
-        async function handleFiles(fileList) {
-            const ncmFiles = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.ncm'));
-            if (ncmFiles.length === 0) { showStatus('Please select NCM files only', 'error'); return; }
-            
-            // Process 10 files at a time to limit memory usage
-            const BATCH_SIZE = 10;
-            for (let i = 0; i < ncmFiles.length; i += BATCH_SIZE) {
-                const batch = ncmFiles.slice(i, i + BATCH_SIZE);
-                await Promise.all(batch.map(file => processFile(file)));
-            }
-        }
-        
-        async function processFile(file) {
-            const fileId = 'file-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-            addLoadingItem(fileId, file.name);
-            
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const result = await decryptNCM(arrayBuffer);
-                
-                // Get album art from API only (high quality)
-                let coverData = null;
-                let coverUrl = null;
-                let mimeType = 'image/jpeg';
-                
-                if (result.musicId) {
-                    const apiCoverUrl = await fetchAlbumArt(result.musicId);
-                    if (apiCoverUrl) {
-                        coverData = await fetchImageAsBytes(apiCoverUrl);
-                        coverUrl = apiCoverUrl;
-                    }
-                }
-                
-                // Detect image type
-                if (coverData && coverData.length > 2) {
-                    if (coverData[0] === 0x89 && coverData[1] === 0x50) mimeType = 'image/png';
-                    else if (coverData[0] === 0xff && coverData[1] === 0xd8) mimeType = 'image/jpeg';
-                }
-                
-                // Embed tags
-                let finalAudio = result.audio;
-                if (result.format === 'flac') {
-                    finalAudio = embedFlacTags(result.audio, coverData, mimeType, result.title, result.artist, result.album);
-                } else {
-                    finalAudio = embedMp3Tags(result.audio, coverData, mimeType, result.title, result.artist, result.album);
-                }
-                
-                const audioMime = result.format === 'flac' ? 'audio/flac' : 'audio/mpeg';
-                const blob = new Blob([finalAudio], { type: audioMime });
-                const audioUrl = URL.createObjectURL(blob);
-                
-                files[fileId] = {
-                    ...result,
-                    audio: finalAudio,
-                    audioUrl,
-                    coverUrl,
-                    filename: `${result.title} - ${result.artist}.${result.format}`
-                };
-                
-                removeItem(fileId);
-                addFileItem(fileId, files[fileId]);
-                updateButtons();
-            } catch (err) {
-                removeItem(fileId);
-                showStatus(`Failed: ${file.name} - ${err.message}`, 'error');
-            }
-        }
-        
-        function addLoadingItem(id, name) {
-            removeEmptyState();
-            const item = document.createElement('div');
-            item.className = 'file-item loading'; item.id = id;
-            item.innerHTML = `<div class="spinner"></div><div class="file-info"><div class="file-title">${escapeHtml(name)}</div><div class="file-artist">Converting...</div></div>`;
-            fileList.appendChild(item);
-        }
-        
-        function addFileItem(id, file) {
-            removeEmptyState();
-            const item = document.createElement('div');
-            item.className = 'file-item'; item.id = id;
-            item.innerHTML = `
-                ${file.coverUrl ? `<img class="file-cover" src="${file.coverUrl}" alt="Cover">` : '<div class="file-cover"></div>'}
-                <div class="file-info">
-                    <div class="file-title">${escapeHtml(file.title)}</div>
-                    <div class="file-artist">${escapeHtml(file.artist)}</div>
-                    <div class="file-album">${escapeHtml(file.album)}</div>
-                </div>
-                <span class="file-format">${file.format.toUpperCase()}</span>
-                <div class="file-actions">
-                    <button class="file-btn play-btn" data-id="${id}" title="Play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-                    <button class="file-btn download-btn" data-id="${id}" title="Download"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
-                    <button class="file-btn delete-btn" data-id="${id}" title="Delete"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-                </div>`;
-            fileList.appendChild(item);
-            item.querySelector('.play-btn').addEventListener('click', () => togglePlay(id));
-            item.querySelector('.download-btn').addEventListener('click', () => downloadFile(id));
-            item.querySelector('.delete-btn').addEventListener('click', () => deleteFile(id));
-        }
-        
-        function removeItem(id) { const item = document.getElementById(id); if (item) item.remove(); checkEmptyState(); }
-        function removeEmptyState() { const empty = fileList.querySelector('.empty-state'); if (empty) empty.remove(); }
-        function checkEmptyState() { if (Object.keys(files).length === 0 && !fileList.querySelector('.loading')) fileList.innerHTML = '<div class="empty-state">No files converted yet</div>'; }
-        function updateButtons() { const hasFiles = Object.keys(files).length > 0; downloadAllBtn.disabled = !hasFiles; clearBtn.disabled = !hasFiles; }
-        
-        function togglePlay(fileId) { if (currentFileId === fileId && !audioPlayer.paused) audioPlayer.pause(); else playTrack(fileId); }
-        
-        function playTrack(fileId) {
-            const file = files[fileId];
-            if (!file) return;
-            if (file.coverUrl) { playerCover.src = file.coverUrl; playerCover.style.display = 'block'; playerCoverPlaceholder.style.display = 'none'; }
-            else { playerCover.style.display = 'none'; playerCoverPlaceholder.style.display = 'block'; }
-            playerTitle.textContent = file.title; playerArtist.textContent = file.artist; playerPlayBtn.disabled = false;
-            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('playing'));
-            document.getElementById(fileId)?.classList.add('playing');
-            document.querySelectorAll('.play-btn').forEach(btn => { btn.classList.remove('playing'); btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; });
-            currentFileId = fileId;
-            audioPlayer.src = file.audioUrl;
-            audioPlayer.play();
-        }
-        
-        audioPlayer.addEventListener('play', () => {
-            playerPlayBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
-            if (currentFileId) { const btn = document.querySelector(`[data-id="${currentFileId}"].play-btn`); if (btn) { btn.classList.add('playing'); btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`; } }
-        });
-        audioPlayer.addEventListener('pause', () => {
-            playerPlayBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
-            if (currentFileId) { const btn = document.querySelector(`[data-id="${currentFileId}"].play-btn`); if (btn) { btn.classList.remove('playing'); btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; } }
-        });
-        audioPlayer.addEventListener('ended', () => { document.querySelectorAll('.file-item').forEach(el => el.classList.remove('playing')); playerPlayBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; playerProgressFill.style.width = '0%'; });
-        audioPlayer.addEventListener('timeupdate', () => { if (audioPlayer.duration) { playerProgressFill.style.width = `${(audioPlayer.currentTime / audioPlayer.duration) * 100}%`; playerCurrent.textContent = formatTime(audioPlayer.currentTime); } });
-        audioPlayer.addEventListener('loadedmetadata', () => { playerDuration.textContent = formatTime(audioPlayer.duration); });
-        playerPlayBtn.addEventListener('click', () => { if (!currentFileId) return; if (audioPlayer.paused) audioPlayer.play(); else audioPlayer.pause(); });
-        playerProgress.addEventListener('click', (e) => { if (!audioPlayer.duration) return; const rect = playerProgress.getBoundingClientRect(); audioPlayer.currentTime = ((e.clientX - rect.left) / rect.width) * audioPlayer.duration; });
-        volumeSlider.addEventListener('input', (e) => { audioPlayer.volume = e.target.value; });
-        
-        function formatTime(seconds) { if (!seconds || isNaN(seconds)) return '0:00'; return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`; }
-        
-        function downloadFile(fileId) {
-            const file = files[fileId]; if (!file) return;
-            const a = document.createElement('a'); a.href = file.audioUrl; a.download = file.filename; a.click();
-        }
-        
-        downloadAllBtn.addEventListener('click', async () => {
-            if (Object.keys(files).length === 0) return;
-            downloadAllBtn.disabled = true; downloadAllBtn.textContent = 'Creating ZIP...';
-            try {
-                const zip = new JSZip();
-                for (const [id, file] of Object.entries(files)) zip.file(file.filename, file.audio);
-                const blob = await zip.generateAsync({ type: 'blob' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); a.href = url; a.download = 'ncm_converted.zip'; a.click();
-                URL.revokeObjectURL(url);
-            } catch (err) { showStatus('Failed to create ZIP', 'error'); }
-            downloadAllBtn.disabled = false;
-            downloadAllBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download All (ZIP)`;
-        });
-        
-        function deleteFile(fileId) {
-            if (currentFileId === fileId) { audioPlayer.pause(); audioPlayer.src = ''; currentFileId = null; resetPlayer(); }
-            const file = files[fileId];
-            if (file) { if (file.audioUrl) URL.revokeObjectURL(file.audioUrl); if (file.coverUrl && file.coverUrl.startsWith('blob:')) URL.revokeObjectURL(file.coverUrl); }
-            delete files[fileId]; removeItem(fileId); updateButtons();
-        }
-        
-        clearBtn.addEventListener('click', () => {
-            audioPlayer.pause(); audioPlayer.src = ''; currentFileId = null;
-            for (const file of Object.values(files)) { if (file.audioUrl) URL.revokeObjectURL(file.audioUrl); if (file.coverUrl && file.coverUrl.startsWith('blob:')) URL.revokeObjectURL(file.coverUrl); }
-            files = {}; fileList.innerHTML = '<div class="empty-state">No files converted yet</div>'; updateButtons(); resetPlayer();
-        });
-        
-        function resetPlayer() {
-            playerTitle.textContent = 'No track selected'; playerArtist.textContent = '-';
-            playerCover.style.display = 'none'; playerCoverPlaceholder.style.display = 'block';
-            playerPlayBtn.disabled = true; playerProgressFill.style.width = '0%';
-            playerCurrent.textContent = '0:00'; playerDuration.textContent = '0:00';
-        }
-        
-        function showStatus(message, type) { statusEl.textContent = message; statusEl.className = `status ${type}`; setTimeout(() => { statusEl.className = 'status'; }, 5000); }
-        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-    </script>
 </body>
 </html>

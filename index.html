@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCM Converter - Convert NCM to FLAC or MP3 in Your Browser</title>
+    <title>NCM to FLAC Converter with Album Cover - Local, Browser-Based</title>
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="NypvpdlXDyT1birUMgBmhfOxS5cZaOC4y60_6GRkY-I" />
@@ -12,24 +12,22 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a1a2e'/><path d='M65 20v45c0 8-7 15-15 15s-15-7-15-15 7-15 15-15c3 0 6 1 8 2V20h7z' fill='%23ff9f43'/><circle cx='50' cy='65' r='12' fill='%23ff9f43'/></svg>">
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free online NCM converter. Convert NetEase Cloud Music (.ncm) files to FLAC or MP3 in your browser, keep album art and metadata, and preview tracks before download.">
+    <meta name="description" content="Local NCM to FLAC converter with album cover. Convert NetEase Cloud Music (.ncm) files in your browser.">
     <meta name="author" content="nr2bj">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 
     <!-- Open Graph (Facebook, Discord, etc.) -->
-    <meta property="og:title" content="NCM Converter - Convert NetEase Cloud Music to FLAC/MP3 Online Free">
-    <meta property="og:description" content="Free online NCM file converter. Convert .ncm files to FLAC/MP3 with album art. No upload, runs in your browser. 网易云音乐 NCM 변환기.">
+    <meta property="og:title" content="NCM to FLAC Converter with Album Cover">
+    <meta property="og:description" content="Local NCM to FLAC converter with album cover. Browser-based, no upload.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nr2bj.github.io/ncm-converter/">
     <meta property="og:site_name" content="NCM Converter">
     <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="ko_KR">
-    <meta property="og:locale:alternate" content="zh_CN">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="NCM Converter - Convert NetEase Cloud Music to FLAC/MP3">
-    <meta name="twitter:description" content="Free online NCM converter with album art. No upload needed - 100% browser-based.">
+    <meta name="twitter:title" content="NCM to FLAC Converter with Album Cover">
+    <meta name="twitter:description" content="Local NCM to FLAC converter with album cover. Browser-based.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://nr2bj.github.io/ncm-converter/">
@@ -39,29 +37,18 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "NCM Converter",
+        "name": "NCM to FLAC Converter",
         "url": "https://nr2bj.github.io/ncm-converter/",
-        "description": "Free online tool to convert NetEase Cloud Music (.ncm) files to FLAC/MP3 with high-quality album art. All processing happens in your browser - no file upload required.",
+        "description": "Local NCM to FLAC converter with album cover. Browser-based NCM file converter.",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any",
-        "browserRequirements": "Requires a modern web browser with JavaScript enabled",
         "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD"
         },
-        "featureList": [
-            "Convert NCM to FLAC",
-            "Convert NCM to MP3",
-            "High-quality album art embedding",
-            "Batch file conversion",
-            "Browser-based processing",
-            "No file upload required",
-            "Built-in music player",
-            "ZIP download for multiple files"
-        ],
         "datePublished": "2026-02-10T00:00:00+09:00",
-        "dateModified": "2026-03-17T00:00:00+09:00",
+        "dateModified": "2026-04-24T00:00:00+09:00",
         "author": {
             "@type": "Person",
             "name": "nr2bj",
@@ -77,12 +64,6 @@
             background: #1a1a2e; color: #eee; min-height: 100vh; padding: 20px; padding-top: 100px;
         }
         .container { max-width: 900px; margin: 0 auto; }
-        .site-nav {
-            display: flex; justify-content: flex-end; gap: 14px; margin-bottom: 18px;
-            font-size: 14px; flex-wrap: wrap;
-        }
-        .site-nav a { color: #9fb3d9; text-decoration: none; }
-        .site-nav a:hover { color: #ff9f43; }
         .player-bar {
             position: fixed; top: 0; left: 0; right: 0; background: #0f0f1a;
             border-bottom: 1px solid #333; padding: 12px 20px; z-index: 1000;
@@ -156,30 +137,6 @@
         .status.error { background: #4a1a1a; color: #ff6b6b; display: block; }
         .status.success { background: #3d2a1a; color: #ff9f43; display: block; }
         .empty-state { text-align: center; padding: 40px; color: #666; }
-        .trust-strip {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
-            margin: 0 0 28px;
-        }
-        .trust-card {
-            background: #11192f; border: 1px solid #2a3558; border-radius: 10px; padding: 14px 16px;
-        }
-        .trust-card strong { display: block; color: #fff; margin-bottom: 6px; font-size: 14px; }
-        .trust-card span { color: #99a4c2; font-size: 13px; line-height: 1.5; }
-        .seo-content { margin-top: 60px; padding-top: 40px; border-top: 1px solid #333; }
-        .seo-content h2 { color: #fff; margin-bottom: 12px; font-size: 24px; }
-        .seo-content p { color: #a5afc8; line-height: 1.7; font-size: 14px; margin-bottom: 14px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .feature-card { background: #1a2744; border-radius: 8px; padding: 16px; }
-        .feature-card h3 { color: #ddd; font-size: 15px; margin-bottom: 8px; }
-        .feature-card p { margin-bottom: 0; }
-        .resource-links {
-            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
-        }
-        .resource-links a {
-            color: #ff9f43; text-decoration: none; border: 1px solid #3f475f; border-radius: 999px;
-            padding: 10px 14px; font-size: 13px; background: #11192f;
-        }
-        .resource-links a:hover { border-color: #ff9f43; }
         footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; text-align: center; color: #666; font-size: 13px; }
         footer a { color: #ff9f43; text-decoration: none; }
         footer a:hover { text-decoration: underline; }
@@ -218,14 +175,8 @@
     </div>
     
     <main class="container">
-        <nav class="site-nav" aria-label="Site navigation">
-            <a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">How to convert</a>
-            <a href="https://ncm.nr2bj.com/faq.html">FAQ</a>
-            <a href="https://ncm.nr2bj.com/privacy.html">Privacy</a>
-            <a href="https://ncm.nr2bj.com/about.html">About</a>
-        </nav>
-        <header class="header"><h1>NCM Converter</h1></header>
-        <p class="subtitle">Convert NetEase Cloud Music (.ncm) files to FLAC/MP3 with album art, metadata, and instant playback &mdash; 100% browser-based, no upload required</p>
+        <header class="header"><h1>NCM to FLAC Converter</h1></header>
+        <p class="subtitle">Local &middot; with album cover</p>
 
         <section aria-label="File upload">
             <div class="drop-zone" id="drop-zone">
@@ -248,55 +199,8 @@
             </div>
         </section>
 
-        <section class="trust-strip" aria-label="Key features">
-            <div class="trust-card">
-                <strong>Runs locally</strong>
-                <span>Your files stay in the browser. Nothing is uploaded to this site during conversion.</span>
-            </div>
-            <div class="trust-card">
-                <strong>Preserves metadata</strong>
-                <span>Title, artist, album, and cover art are written back into the exported file when available.</span>
-            </div>
-            <div class="trust-card">
-                <strong>Preview before download</strong>
-                <span>Play converted tracks in the page first, then download one by one or as a ZIP archive.</span>
-            </div>
-        </section>
-
-        <section class="seo-content">
-            <h2>Browser-based NCM conversion for personal playback</h2>
-            <p>NCM Converter is a free web app for people who already have lawful access to NetEase Cloud Music downloads and want them in standard audio formats. It reads the NCM container locally in the browser, restores the original audio stream, and prepares a downloadable FLAC or MP3 file with album data when that information is available.</p>
-            <p>The homepage stays focused on the tool itself. If you want the supporting details, there are separate pages for step-by-step instructions, privacy notes, common questions, and project background so both visitors and search engines can understand what the site offers without burying the converter under filler copy.</p>
-            <div class="features-grid">
-                <article class="feature-card">
-                    <h3>FLAC and MP3 export</h3>
-                    <p>The app detects the original stream and keeps lossless FLAC output untouched when the source track is lossless.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Album art and tags</h3>
-                    <p>Converted files can include title, artist, album, and cover image metadata instead of a bare audio file.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Built-in playback</h3>
-                    <p>Preview converted tracks in the player bar before downloading individual files or a ZIP bundle.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Simple static deployment</h3>
-                    <p>The site is just static HTML and JavaScript, so it can be hosted easily behind Caddy or any static file server.</p>
-                </article>
-            </div>
-            <div class="resource-links">
-                <a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">Read the conversion guide</a>
-                <a href="https://ncm.nr2bj.com/faq.html">Open the FAQ</a>
-                <a href="https://ncm.nr2bj.com/privacy.html">Review privacy details</a>
-                <a href="https://ncm.nr2bj.com/about.html">Learn about the project</a>
-            </div>
-        </section>
-
         <footer>
-            <p>NCM Converter &mdash; Free online NCM to FLAC/MP3 converter. <a href="https://github.com/NR2BJ/ncm-converter" target="_blank" rel="noopener">View on GitHub</a></p>
-            <p><a href="https://ncm.nr2bj.com/how-to-convert-ncm.html">How to convert</a> · <a href="https://ncm.nr2bj.com/faq.html">FAQ</a> · <a href="https://ncm.nr2bj.com/privacy.html">Privacy</a> · <a href="https://ncm.nr2bj.com/about.html">About</a></p>
-            <p>NCM 변환기 | 网易云音乐 NCM 文件转换器</p>
+            <a href="https://github.com/NR2BJ/ncm-converter" target="_blank" rel="noopener">GitHub</a>
         </footer>
     </main>
     
@@ -653,8 +557,7 @@
             if (!musicId) return null;
             
             try {
-                // Use local Caddy proxy - no CORS issues
-                const response = await fetch(`https://ncm.nr2bj.com/proxy/api/song/detail/?ids=[${musicId}]`);
+                const response = await fetch(`https://ncmproxy.richard00726.workers.dev/proxy/api/song/detail/?ids=[${musicId}]`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.songs && data.songs[0]) {
@@ -671,14 +574,12 @@
             if (!url) return null;
             
             try {
-                // Use local Caddy proxy for image
-                // music.126.net images -> /img/ proxy
                 const urlObj = new URL(url);
                 let proxyUrl;
                 if (urlObj.hostname.includes('126.net')) {
-                    proxyUrl = `https://ncm.nr2bj.com/img${urlObj.pathname}`;
+                    proxyUrl = `https://ncmproxy.richard00726.workers.dev/img${urlObj.pathname}`;
                 } else {
-                    proxyUrl = `https://ncm.nr2bj.com/proxy${urlObj.pathname}`;
+                    proxyUrl = `https://ncmproxy.richard00726.workers.dev/proxy${urlObj.pathname}`;
                 }
                 
                 const response = await fetch(proxyUrl);
